@@ -47,7 +47,7 @@ list_name = filter(None, list_name) # This method is filtering what you want in 
 """
 def def_cal_note(line):  # -Why this is line?- There will be operations on each lines.
 
-    line = line[:-1]  # Python is giving itself extra '\n', so to erase is I prefered to [:-1].
+    line = line[:-1]  # Python is giving itself extra '\n', so to erase is I used [:-1].
     f_list = line.split(",")  # Each name and his/her all notes must be in the same list.
                               # In source file each line is like this (name,note_1,note_2,note_3). So to specifiy each element of each list I used split(",").
  
