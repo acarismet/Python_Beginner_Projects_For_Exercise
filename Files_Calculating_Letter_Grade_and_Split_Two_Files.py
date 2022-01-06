@@ -1,0 +1,129 @@
+print("""
+Subject: File Operations
+Project Discription: There is a source txt file which contains names and three notes of each name. 
+First two notes have %30 effect and last note has %40 effect on final note.
+These notes have to be calculated and letter grades of all names have to be specified.
+Names who got "FD" and "FF" will be in unsuccesful file and others will be on succesful file.
+******************************************************************************************************
+There are two target files so as a solution I created two different aimed def functions,
+two same source_file reading but different list appends and two different files writing.
+******************************************************************************************************
+PROBLEM AND HOW I SOLVED IT:
+There was only one problem.
+Two different aimed def functions were returning succesful and unsuccesful ones.
+def def_cal_note function was returning unsuccesful ones but other names were returned as None. The same situation for both functions.
+And it was giving ###TypeError: write() argument must be str, not None###
+***************************************************
+Solving Tests:
+1) So to get rid of these all Nones I tried first of all if in file reading and list append section. But when I printed the the list nothing changed:
+any_list = []
+    for i in file:
+        if i != None:
+            any_list.append(cal_note(i))
+
+2) I tried remove method but same result. I printed list and nothing changed. None are still in list.
+ list_name.remove()
+
+3) And finally I tried filter method after append list:
+list_name = filter(None, list_name) # This method is filtering what you want in list.  
+
+******************************************************************************************************
+# YOU CAN CREATE YOUR OWN FILES AND NAMED HOW YOU LIKE/
+
+1- CREATE A .txt SOURCE FILE IN YOUR WORK DIRECTORY AS MANUAL :
+    Adam Smith,45,73,100
+    Frank Sinatra,74,91,24
+    Benjamin Franklin,68,54,85
+    .
+    .
+    .
+    .
+    etc.
+2- AND YOU CAN CREATE OTHER TWO TARGET FILES IN CODE WITH 'w' file access mode
+
+**********************************************************************************************************************************************************************
+####################################################################### I HOPE YOU ENJOY IT ##########################################################################
+**********************************************************************************************************************************************************************
+""")
+
+
+def def_cal_note(line):  # -Why this is line?- There will be operations on each lines.
+
+    line = line[:-1]  # Python is giving itself extra '\n', so to erase is I used [:-1].
+    f_list = line.split(",")  # Each name and his/her all notes must be in the same list.
+    # In source file each line is like this (name,note_1,note_2,note_3). So to specifiy each element of each list I used split(",").
+
+    name = f_list[0]
+    note_1 = int(f_list[1])
+    note_2 = int(f_list[2])
+    note_3 = int(f_list[3])
+
+    final_note = note_1 * (3 / 10) + note_2 * (3 / 10) + note_3 * (4 / 10)
+
+    if (final_note < 60):
+
+        if (final_note >= 55):
+
+            letter = "FD"
+        else:
+            letter = "FF"
+        return name + "-------------->" + letter + "\n"
+
+
+def suc_cal_note(line):
+    line = line[:-1]
+    s_list = line.split(",")
+
+    name = s_list[0]
+    note_1 = int(s_list[1])
+    note_2 = int(s_list[2])
+    note_3 = int(s_list[3])
+
+    final_note = note_1 * (3 / 10) + note_2 * (3 / 10) + note_3 * (4 / 10)
+
+    if (final_note >= 60):
+
+        if (final_note >= 90):
+            letter = "AA"
+        elif (final_note >= 85):
+            letter = "BA"
+        elif (final_note >= 80):
+            letter = "BB"
+        elif (final_note >= 75):
+            letter = "CB"
+        elif (final_note >= 70):
+            letter = "CC"
+        elif (final_note >= 65):
+            letter = "DC"
+        else:
+            letter = "DD"
+        return name + "-------------->" + letter + "\n"
+
+
+with open("source_file.txt", "r", encoding="utf-8") as file:
+    def_list = []
+    for i in file:
+        def_list.append(def_cal_note(i))
+
+    print("def_list\n", def_list)
+    def_list = filter(None, def_list)
+    print("new_def_list:\n", def_list)
+
+    with open("unsuccesful.txt", "w", encoding="utf-8") as file2:
+
+        for i in def_list:
+            file2.write(i)
+
+with open("succesful.txt", "r", encoding="utf-8") as file:
+    suc_list = []
+    for i in file:
+        suc_list.append(suc_cal_note(i))
+
+    print("suc_list\n", suc_list)
+    suc_list = filter(None, suc_list)
+    print("new_suc_list:\n", suc_list)
+
+    with open("deneme_gecenler.txt", "w", encoding="utf-8") as file3:
+
+        for i in suc_list:
+            file3.write(i)
